@@ -26,6 +26,8 @@ class Sentence:
         self.last_sentence_req = sentence_reqs
 
         additional_sentence_reqs = dict()
+        if self.truth_value_combo_iterator >= len(reverse_truth_table[self.connective][truth_value]):
+            return False, additional_sentence_reqs
         for truth_value_combo in reverse_truth_table[self.connective][truth_value][self.truth_value_combo_iterator:]:
             self.truth_value_combo_iterator += 1
             additional_sentence_reqs.clear()
@@ -58,8 +60,9 @@ class Sentence:
                 # If the type of `sentence` is `Sentence`, it is not an atomic sentence, and we use recursion to drill
                 # one level deeper.
                 elif type(sub_sentence) == Sentence:
-                    (test_result, temp_additional_sentence_reqs) = sub_sentence.test_value_possible(truth_value_combo[sentence_index],
-                                                                   {**sentence_reqs, **additional_sentence_reqs})
+                    (test_result, temp_additional_sentence_reqs) = sub_sentence.test_value_possible(
+                        truth_value_combo[sentence_index],
+                        {**sentence_reqs, **additional_sentence_reqs})
                     additional_sentence_reqs.update(temp_additional_sentence_reqs)
                 # If it's not either of the types, something is wrong
                 else:
