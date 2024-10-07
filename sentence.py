@@ -2,11 +2,6 @@ from logical_connectives import reverse_truth_table
 
 
 class Sentence:
-    first_test_value_possible = True
-    last_truth_value_req = False
-    last_sentence_req = {"": False}
-    truth_value_combo_iterator = 0
-
     def test_value_possible(self, truth_value: bool, sentence_reqs: dict[str, bool]) -> (bool, dict[str, bool]):
         """Test whether a given truth value is possible
 
@@ -15,21 +10,24 @@ class Sentence:
         :return: If the truth value can be fulfilled while the atomic sentence truth requirements are simultaneously
         fulfilled.
         """
-        first_test_value_possible = False
         test_result = False
 
-        if not first_test_value_possible:
-            if truth_value != self.last_truth_value_req or self.last_sentence_req != sentence_reqs:
+        if not self.first_test_value_possible:
+            if self.last_truth_value_req != truth_value or self.last_sentence_req != sentence_reqs:
                 self.truth_value_combo_iterator = 0
 
+        self.first_test_value_possible = False
         self.last_truth_value_req = truth_value
         self.last_sentence_req = sentence_reqs
 
         additional_sentence_reqs = dict()
+        print(self.truth_value_combo_iterator)
         if self.truth_value_combo_iterator >= len(reverse_truth_table[self.connective][truth_value]):
             return False, additional_sentence_reqs
+
         for truth_value_combo in reverse_truth_table[self.connective][truth_value][self.truth_value_combo_iterator:]:
             self.truth_value_combo_iterator += 1
+            print("added:" + str(self.truth_value_combo_iterator))
             additional_sentence_reqs.clear()
             for sentence_index, sub_sentence in enumerate(self.sub_sentences):
                 # If the type of `sentence` is a non-empty string, it is an atomic sentence.
@@ -94,3 +92,8 @@ class Sentence:
     def __init__(self, left_sentence, connective, right_sentence):
         self.sub_sentences = [left_sentence, right_sentence]
         self.connective = connective
+        self.first_test_value_possible = True
+        self.last_truth_value_req = False
+        self.last_sentence_req = {"": False}
+        self.truth_value_combo_iterator = 0
+
