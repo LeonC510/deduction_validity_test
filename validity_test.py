@@ -16,7 +16,7 @@ def test_validity(test_argument: argument) -> bool:
     conclusion_sentence_reqs = dict()
     # We put this in a loop so that we can test every combination that make the conclusion sentence false
     while True:
-        (conclusion_possible, conclusion_sentence_reqs) = test_argument.conclusion.test_value_possible(False, conclusion_sentence_reqs)
+        (conclusion_possible, conclusion_sentence_reqs) = test_argument.conclusion.test_value_possible(False)
         # If all truth value combinations have been tried without any of them allowing all the premises to be true when
         # the conclusion is false, then this argument is valid.
         if not conclusion_possible:

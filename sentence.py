@@ -2,7 +2,7 @@ from logical_connectives import reverse_truth_table
 
 
 class Sentence:
-    def test_value_possible(self, truth_value: bool, sentence_reqs: dict[str, bool]) -> (bool, dict[str, bool]):
+    def test_value_possible(self, truth_value: bool, sentence_reqs: dict[str, bool] = None) -> (bool, dict[str, bool]):
         """Test whether a given truth value is possible
 
         :param truth_value: The truth value requirement to test.
@@ -10,6 +10,8 @@ class Sentence:
         :return: If the truth value can be fulfilled while the atomic sentence truth requirements are simultaneously
         fulfilled.
         """
+        if sentence_reqs is None:
+            sentence_reqs = dict()
         test_result = False
 
         if not self.first_test_value_possible:
