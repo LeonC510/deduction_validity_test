@@ -21,13 +21,11 @@ class Sentence:
         self.last_sentence_req = sentence_reqs
 
         additional_sentence_reqs = dict()
-        print(self.truth_value_combo_iterator)
         if self.truth_value_combo_iterator >= len(reverse_truth_table[self.connective][truth_value]):
             return False, additional_sentence_reqs
 
         for truth_value_combo in reverse_truth_table[self.connective][truth_value][self.truth_value_combo_iterator:]:
             self.truth_value_combo_iterator += 1
-            print("added:" + str(self.truth_value_combo_iterator))
             additional_sentence_reqs.clear()
             for sentence_index, sub_sentence in enumerate(self.sub_sentences):
                 # If the type of `sentence` is a non-empty string, it is an atomic sentence.
