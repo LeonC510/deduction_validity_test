@@ -3,6 +3,14 @@ from sentence import Sentence
 from argument import Argument
 from validity_test import test_validity
 
+# This is an example demonstrating the adaptability of this program.
+# The following code tests the argument
+# (A & B) → C
+# A ∨ D
+# ¬D
+# ¬(¬D & E) ∨ B
+# ¬E
+# ∴, C
 premise_1 = Sentence(
     Sentence(
         "A",
@@ -24,11 +32,9 @@ premise_4 = Sentence(
     LogicalConnectives.LC_OR,
     "B"
 )
-premise_5 = Sentence("", LogicalConnectives.LC_NOT, "E")
+premise_5 = Sentence("", LogicalConnectives.LC_IS, "E")
 conclusion = Sentence("", LogicalConnectives.LC_IS, "C")
 
-my_argument = Argument([premise_1, premise_2, premise_3, premise_4, premise_5], conclusion)
+valid = test_validity(Argument([premise_1, premise_2, premise_3, premise_4, premise_5], conclusion))
 
-valid = test_validity(my_argument)
-
-print("This argument is " + ("valid" if valid else "invalid"))
+print("This argument is " + ("valid" if valid else "invalid") + ".")
